@@ -4,9 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-FILEPATH = 'resources/companies.csv'
-MIN_AVG_VOL = 500000
-MIN_PRICE = 2
+from constants import ALL_TICKERS_FILEPATH, FILTERED_TICKERS_FILEPATH, MIN_PRICE, MIN_VOLUME
+
 
 class Stock:
     def __init__(self, ticker):
@@ -29,11 +28,13 @@ class Stock:
         self.avg_volume = int(yahoo_soup.find_all(
             attrs={"data-test": "AVERAGE_VOLUME_3MONTH-value"})[0].text.replace(',', ''))
 
+
 def get_tickers():
     """ get tickers from csv file """
-    df = pd.read_csv(FILEPATH)
+    df = pd.read_csv(ALL_TICKERS_FILEPATH)
     tickers = df['ticker']
     return tickers
+
 
 def update_db():
     """ print the data for every ticker """
@@ -44,7 +45,7 @@ def update_db():
     for t in tickers:
         try:
             stock = Stock(t)
-            if (stock.avg_volume > MIN_AVG_VOL and stock.price > MIN_PRICE):
+            if stock.avg_volume > MIN_VOLUME and stock.price > MIN_PRICE:
                 stocks.append(stock)
                 new_tickers.append(t)
                 print(f'Added ${t} to db')
@@ -54,7 +55,8 @@ def update_db():
             print(f'Can\'t find ${t}', e)
 
     df = pd.DataFrame(new_tickers, columns=['ticker'])
-    df.to_csv('db.csv', index=False)
+    df.to_csv(FILTERED_TICKERS_FILEPATH, index=False)
+
 
 if __name__ == '__main__':
     update_db()
