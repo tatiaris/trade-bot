@@ -1,1 +1,3 @@
 # trade-bot
+
+yuhhhh moneyyyy
