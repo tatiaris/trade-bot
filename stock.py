@@ -3,9 +3,7 @@ from typing import Optional
 
 import requests
 from bs4 import BeautifulSoup
-
-
-MIN_FRACTION_BLOWING = .5
+from constants import MIN_FRACTION_BLOWING
 
 
 class Stock:
@@ -19,6 +17,7 @@ class Stock:
         self.volume = None
         self.avg_volume = None
         self.change = None
+        self.volume_dif_fraction = None
         self.load_data()
 
     def load_data(self):
@@ -48,11 +47,13 @@ class Stock:
             attrs={"data-test": "TD_VOLUME-value"})[0].text.replace(',', ''))
         self.avg_volume = int(yahoo_soup.find_all(
             attrs={"data-test": "AVERAGE_VOLUME_3MONTH-value"})[0].text.replace(',', ''))
+
         self.change = (self.price - self.open_price) * 100/self.open_price
+        self.volume_dif_fraction = (self.volume - self.avg_volume) / self.avg_volume
 
     def is_blowing(self):
         """ If the current volume is above the average volume by enough then the stock is considered 'blowing' """
-        return (self.volume - self.avg_volume) / self.avg_volume > MIN_FRACTION_BLOWING
+        return self.volume_dif_fraction > MIN_FRACTION_BLOWING
 
     def __print_time_dif(self, title: Optional[str] = ''):
         print(title, 'time (s):', time.time() - self.__time)
