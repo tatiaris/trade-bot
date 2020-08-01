@@ -24,9 +24,9 @@ class Stock:
     def load_data(self):
         self.__time = time.time()
         yahoo_result = requests.get("https://finance.yahoo.com/quote/" + self.ticker)
-        self.print_time_dif('yahoo')
+        self.__print_time_dif('yahoo')
         robin_result = requests.get('https://robinhood.com/stocks/' + self.ticker)
-        self.print_time_dif('robin hood')
+        self.__print_time_dif('robin hood')
 
         yahoo_c = yahoo_result.content
         robin_c = robin_result.content
@@ -54,7 +54,7 @@ class Stock:
         """ If the current volume is above the average volume by enough then the stock is considered 'blowing' """
         return (self.volume - self.avg_volume) / self.avg_volume > MIN_FRACTION_BLOWING
 
-    def print_time_dif(self, title: Optional[str] = ''):
+    def __print_time_dif(self, title: Optional[str] = ''):
         print(title, 'time (s):', time.time() - self.__time)
         self.__time = time.time()
 

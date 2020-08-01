@@ -3,6 +3,7 @@ from stock import Stock
 
 FILEPATH = 'resources/companies.csv'
 
+
 def get_tickers():
     """ get tickers from csv file """
     df = pd.read_csv(FILEPATH)
@@ -10,6 +11,7 @@ def get_tickers():
     tickers = df['ticker']
 
     return tickers
+
 
 def get_ticker_data():
     """ print the data for every ticker """
