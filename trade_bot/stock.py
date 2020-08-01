@@ -1,5 +1,7 @@
+""" webscape stock data """
+
+
 import time
-from typing import Optional
 
 import requests
 from bs4 import BeautifulSoup
@@ -7,7 +9,7 @@ from constants import MIN_FRACTION_BLOWING
 
 
 class Stock:
-    def __init__(self, ticker):
+    def __init__(self, ticker: str) -> None:
         self.ticker = ticker
 
         self.__time = time.time()
@@ -20,7 +22,8 @@ class Stock:
         self.volume_dif_fraction = None
         self.load_data()
 
-    def load_data(self):
+    def load_data(self) -> None:
+        """ webscape stock data """
         self.__time = time.time()
         yahoo_result = requests.get("https://finance.yahoo.com/quote/" + self.ticker)
         self.__print_time_dif('yahoo')
@@ -39,6 +42,7 @@ class Stock:
         #print(robin_soup.find_all(attrs={"class": "QzVHcLdwl2CEuEMpTUFaj"})[0].text)
         #print(robin_soup.find_all(attrs={"class": "QzVHcLdwl2CEuEMpTUFaj"})[0].text.replace(',', ''))
 
+        # this section will error if Robin Hood or Yahoo don't have info on the specified stock
         self.price = float(robin_soup.find_all(
             attrs={"class": "QzVHcLdwl2CEuEMpTUFaj"})[0].text.replace(',', '')[1:])
         self.open_price = float(yahoo_soup.find_all(
@@ -51,16 +55,16 @@ class Stock:
         self.change = (self.price - self.open_price) * 100/self.open_price
         self.volume_dif_fraction = (self.volume - self.avg_volume) / self.avg_volume
 
-    def is_blowing(self):
+    def is_blowing(self) -> bool:  # DELETE ME
         """ If the current volume is above the average volume by enough then the stock is considered 'blowing' """
         return self.volume_dif_fraction > MIN_FRACTION_BLOWING
 
-    def __print_time_dif(self, title: Optional[str] = ''):
+    def __print_time_dif(self, title: str = '') -> None:  # for testing
         print(title, 'time (s):', time.time() - self.__time)
         self.__time = time.time()
 
-    def __str__(self):
-        return '\n' + '\n\t'.join((f'{key}: {value}' for key, value in vars(self).items() if not key.startswith('_'))) + '\n'
+    def __str__(self) -> str:
+        return '\n' + '\n\t'.join(f'{key}: {value}' for key, value in vars(self).items() if not key.startswith('_')) + '\n'
 
 
 if __name__ == '__main__':
