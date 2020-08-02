@@ -6,7 +6,7 @@ Tickers = List[str]
 
 # Resource paths
 REPO_FOLDER = os.path.dirname(os.path.dirname(__file__))
-DATA_FOLDER = os.path.join(REPO_FOLDER, 'resources')
+DATA_FOLDER = os.path.join(REPO_FOLDER, 'data')
 ALL_TICKERS_FILEPATH = os.path.join(DATA_FOLDER, 'all_tickers.csv')
 FILTERED_TICKERS_FILEPATH = os.path.join(DATA_FOLDER, 'filtered_tickers.csv')
 

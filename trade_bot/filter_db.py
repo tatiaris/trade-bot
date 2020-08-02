@@ -17,11 +17,8 @@ class Stock:
         yahoo_result = requests.get("https://finance.yahoo.com/quote/" + self.ticker)
         robin_result = requests.get('https://robinhood.com/stocks/' + self.ticker)
 
-        yahoo_c = yahoo_result.content
-        robin_c = robin_result.content
-
-        yahoo_soup = BeautifulSoup(yahoo_c, features="html.parser")
-        robin_soup = BeautifulSoup(robin_c, features="html.parser")
+        yahoo_soup = BeautifulSoup(yahoo_result.content, features="html.parser")
+        robin_soup = BeautifulSoup(robin_result.content, features="html.parser")
 
         self.price = float(robin_soup.find_all(
             attrs={"class": "QzVHcLdwl2CEuEMpTUFaj"})[0].text.replace(',', '')[1:])

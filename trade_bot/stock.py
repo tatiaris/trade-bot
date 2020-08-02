@@ -30,11 +30,8 @@ class Stock:
         robin_result = requests.get('https://robinhood.com/stocks/' + self.ticker)
         self.__print_time_dif('robin hood')
 
-        yahoo_c = yahoo_result.content
-        robin_c = robin_result.content
-
-        yahoo_soup = BeautifulSoup(yahoo_c, features="html.parser")
-        robin_soup = BeautifulSoup(robin_c, features="html.parser")
+        yahoo_soup = BeautifulSoup(yahoo_result.content, features="html.parser")
+        robin_soup = BeautifulSoup(robin_result.content, features="html.parser")
 
         # for debugging
         #print(robin_soup.find_all(attrs={"class": "QzVHcLdwl2CEuEMpTUFaj"}))
