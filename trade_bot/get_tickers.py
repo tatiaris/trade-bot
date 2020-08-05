@@ -43,5 +43,5 @@ def get_ticker_data():
 
 
 if __name__ == '__main__':
-    #print(get_tickers())
+    # print(get_tickers())
     get_ticker_data()

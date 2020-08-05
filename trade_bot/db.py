@@ -12,12 +12,14 @@ def populate_db():
         tickers = get_tickers()
 
         # generator of lists of tickers, each ticker in 'tickers' is in 'ticker_lists' once
-        ticker_lists = (tickers[i:i + NUM_THREADS] for i in range(0, len(tickers), NUM_THREADS))
+        ticker_lists = (tickers[i:i + NUM_THREADS]
+                        for i in range(0, len(tickers), NUM_THREADS))
 
         # start threads
         threads = []
         for args in ticker_lists:
-            thread = threading.Thread(target=_add_stocks_to_db_thread, args=(args,))
+            thread = threading.Thread(
+                target=_add_stocks_to_db_thread, args=(args,))
             threads.append(thread)
             thread.start()
 

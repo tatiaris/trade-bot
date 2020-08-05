@@ -26,11 +26,15 @@ class Stock:
 
     def load_data(self) -> None:
         """ webscape stock data """
-        yahoo_result = requests.get("https://finance.yahoo.com/quote/" + self.ticker)
-        robin_result = requests.get('https://robinhood.com/stocks/' + self.ticker)
+        yahoo_result = requests.get(
+            "https://finance.yahoo.com/quote/" + self.ticker)
+        robin_result = requests.get(
+            'https://robinhood.com/stocks/' + self.ticker)
 
-        yahoo_soup = BeautifulSoup(yahoo_result.content, features="html.parser")
-        robin_soup = BeautifulSoup(robin_result.content, features="html.parser")
+        yahoo_soup = BeautifulSoup(
+            yahoo_result.content, features="html.parser")
+        robin_soup = BeautifulSoup(
+            robin_result.content, features="html.parser")
 
         # this section will error if Robin Hood or Yahoo don't have info on the specified stock
         self.price = float(robin_soup.find_all(
@@ -39,7 +43,8 @@ class Stock:
         try:
             ocs = robin_soup.find_all(
                 attrs={"class": "_3Flirkl1fA47PUu1VVzeHZ"})[0].text
-            self.overnight_change = float(ocs[ocs.index('(') + 1:ocs.index(')') - 1])
+            self.overnight_change = float(
+                ocs[ocs.index('(') + 1:ocs.index(')') - 1])
         except Exception as e:
             print(f'unable to fetch overnight change for ${self.ticker}')
 
@@ -60,7 +65,8 @@ class Stock:
             attrs={"data-test": "AVERAGE_VOLUME_3MONTH-value"})[0].text.replace(',', ''))
 
         self.change = (self.price - self.open_price) * 100/self.open_price
-        self.volume_dif_fraction = (self.volume - self.avg_volume) / self.avg_volume
+        self.volume_dif_fraction = (
+            self.volume - self.avg_volume) / self.avg_volume
 
     def is_blowing(self) -> bool:  # DELETE ME
         """ If the current volume is above the average volume by enough then the stock is considered 'blowing' """

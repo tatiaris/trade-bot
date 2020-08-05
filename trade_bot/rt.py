@@ -60,6 +60,7 @@ def analyze_stocks() -> None:
 
     df.to_csv(WATCHLIST_TICKERS_FILEPATH, index=False)
 
+
 if __name__ == '__main__':
     analyze_stocks()
     print('analysis complete')
