@@ -4,19 +4,13 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from stock import Stock
+from helper import get_tickers
 
 from constants import ALL_TICKERS_FILEPATH, FILTERED_TICKERS_FILEPATH, MIN_PRICE, MIN_VOLUME
 
-def get_tickers():
-    """ get tickers from csv file """
-    df = pd.read_csv(ALL_TICKERS_FILEPATH)
-    tickers = df['ticker']
-    return tickers
-
-
 def update_db():
-    """ print the data for every ticker """
-    tickers = get_tickers()
+    """ filters tickers based on price and volume and etc """
+    tickers = get_tickers(ALL_TICKERS_FILEPATH)
     stocks = []
     new_tickers = []
 

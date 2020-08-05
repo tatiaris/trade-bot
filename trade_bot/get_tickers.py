@@ -5,23 +5,12 @@ import pandas as pd
 
 from stock import Stock
 from constants import ALL_TICKERS_FILEPATH
-
-
-def get_tickers():
-    """ get tickers from csv file """
-    df = pd.read_csv(ALL_TICKERS_FILEPATH)
-
-    tickers = df['ticker']
-
-    # remove columns that aren't 'ticker' from csv file
-    #tickers.to_csv(ALL_TICKERS_FILEPATH, index=False)
-
-    return tickers
+from helper import get_tickers
 
 
 def get_ticker_data():
     """ print the stock data for every ticker """
-    tickers = get_tickers()
+    tickers = get_tickers(ALL_TICKERS_FILEPATH)
     stocks = []
     blowing_stocks = []
 

@@ -4,21 +4,13 @@ import requests
 import pandas as pd
 from stock import Stock
 import threading
-
+from helper import get_tickers
 from constants import FILTERED_TICKERS_FILEPATH, WATCHLIST_TICKERS_FILEPATH, MIN_PRICE, MIN_VOLUME
-
-
-def get_tickers():
-    """ get tickers from csv file """
-    df = pd.read_csv(FILTERED_TICKERS_FILEPATH)
-    tickers = df['ticker']
-    return tickers
-
 
 def analyze_stocks() -> None:
     """ analyze every ticker """
     print('starting analysis')
-    tickers = get_tickers()
+    tickers = get_tickers(FILTERED_TICKERS_FILEPATH)
     thread_list = []
     watchlist_stocks = []
     losing_stocks = []
