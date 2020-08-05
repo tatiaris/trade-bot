@@ -3,7 +3,7 @@ from stock import Stock
 import typing
 
 def get_tickers(filepath: str) -> typing.List[str]:
-    """ get tickers from csv file """
+    """ returns list of tickers from csv file """
     df = pd.read_csv(filepath)
     tickers = df['ticker']
     return tickers

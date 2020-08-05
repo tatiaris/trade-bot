@@ -15,28 +15,28 @@ def analyze_stocks() -> None:
     watchlist_stocks = []
     losing_stocks = []
 
-    def check_blow(t) -> None:
+    def check_blow(tkr: str) -> None:
         try:
-            stock = Stock(t)
+            stock = Stock(tkr)
             if (stock.overnight_change > 5 or stock.volume > stock.avg_volume * 3 or stock.overnight_change < -10):
                 watchlist_stocks.append(stock)
                 print(stock)
             else:
                 print(f'Skipping ${stock.ticker}')
         except Exception as e:
-            print(t, e)
+            print(tkr, e)
 
-    for t in tickers:
-        s_thread = threading.Thread(target=check_blow, args=(t,))
+    for tkr in tickers:
+        s_thread = threading.Thread(target=check_blow, args=(tkr,))
         s_thread.start()
         thread_list.append(s_thread)
 
-    for t in thread_list:
-        t.join()
+    for thread in thread_list:
+        thread.join()
 
     print('Here are today\'s blowing stocks')
-    for s in watchlist_stocks:
-        print(s)
+    for stock in watchlist_stocks:
+        print(stock)
 
     watchlist_tickers = [s.ticker for s in watchlist_stocks]
     prices = [s.price for s in watchlist_stocks]
