@@ -54,6 +54,5 @@ def update_db():
     df = pd.DataFrame(new_tickers, columns=['ticker'])
     df.to_csv(FILTERED_TICKERS_FILEPATH, index=False)
 
-
 if __name__ == '__main__':
     update_db()
