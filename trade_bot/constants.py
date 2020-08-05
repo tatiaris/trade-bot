@@ -11,11 +11,8 @@ ALL_TICKERS_FILEPATH = os.path.join(DATA_FOLDER, 'all_tickers.csv')
 FILTERED_TICKERS_FILEPATH = os.path.join(DATA_FOLDER, 'filtered_tickers.csv')
 WATCHLIST_TICKERS_FILEPATH = os.path.join(DATA_FOLDER, 'watchlist.csv')
 
-MIN_FRACTION_BLOWING = .5  # delete later
+MIN_FRACTION_BLOWING = 2  # delete later
 
 # Factors for what stocks to prune out from analysis
 MIN_PRICE = 2  # $$$
 MIN_VOLUME = 500000
-
-# Threads for performing stock data requests and databasing in parallel
-NUM_THREADS = 10
