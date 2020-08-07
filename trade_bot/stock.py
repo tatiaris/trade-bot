@@ -40,13 +40,13 @@ class Stock:
         self.price = float(robin_soup.find_all(
             attrs={"class": "QzVHcLdwl2CEuEMpTUFaj"})[0].text.replace(',', '')[1:])
 
-        try:
-            ocs = robin_soup.find_all(
-                attrs={"class": "_3Flirkl1fA47PUu1VVzeHZ"})[0].text
-            self.overnight_change = float(
-                ocs[ocs.index('(') + 1:ocs.index(')') - 1])
-        except Exception as e:
-            print(f'unable to fetch overnight change for ${self.ticker}')
+        # try:
+        #     ocs = robin_soup.find_all(
+        #         attrs={"class": "_3Flirkl1fA47PUu1VVzeHZ"})[0].text
+        #     self.overnight_change = float(
+        #         ocs[ocs.index('(') + 1:ocs.index(')') - 1])
+        # except Exception as e:
+        #     print(f'unable to fetch overnight change for ${self.ticker}')
 
         try:
             dcs = robin_soup.find_all(

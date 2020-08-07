@@ -18,7 +18,7 @@ def analyze_stocks() -> None:
     def check_blow(tkr: str) -> None:
         try:
             stock = Stock(tkr)
-            if (stock.overnight_change > 5 or stock.volume > stock.avg_volume * 3 or stock.overnight_change < -10):
+            if (stock.volume > stock.avg_volume * 2.5):
                 watchlist_stocks.append(stock)
                 print(stock)
             else:
