@@ -1,8 +1,8 @@
 """ main function of repo """
 
 
-from db import populate_db, update_db
-from analyze import analyze
+from .db import populate_db, update_db
+from .analyze import analyze
 
 
 def trade_bot():
